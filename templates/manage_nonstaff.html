@@ -1,0 +1,14 @@
+<h1>Manage Non-Staff</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Non-Staff</button>
+</form>
+
+<h2>Non-Staff Currently Present</h2>
+<ul>
+    {% for person in nonstaff %}
+    <li>{{ person.name }} - {{ person.role }} - Present: {{ person.is_present }}</li>
+    <a href="{% url 'update_exit_time' person.id %}">Update Exit Time</a>
+    {% endfor %}
+</ul>

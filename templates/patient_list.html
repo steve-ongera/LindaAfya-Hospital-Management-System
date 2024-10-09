@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient List</title>
+</head>
+<body>
+    <h1>Patient List</h1>
+    <a href="{% url 'patient_create' %}">Add New Patient</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Phone</th>
+            <th>Actions</th>
+        </tr>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.user_name}} {{ patient.user.last_name }}</td>
+            <td>{{ patient.dob }}</td>
+            <td>{{ patient.gender }}</td>
+            <td>{{ patient.phone }}</td>
+            <td>
+                <a href="{% url 'patient_detail' patient.id %}">view</a>
+                <a href="{% url 'patient_update' patient.pk %}">Edit</a>
+                <a href="{% url 'patient_delete' patient.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

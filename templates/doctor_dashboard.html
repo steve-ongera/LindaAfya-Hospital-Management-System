@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor's Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .dashboard-container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .profile {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .patients-list {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .patients-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .patients-list ul li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome, Dr. {{ doctor.user_name }}</h1>
+        
+        <div class="profile">
+            <h2>Profile Information</h2>
+            <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+            <p><strong>Schedule:</strong></p>
+            <pre>{{ doctor.schedule }}</pre>
+        </div>
+
+        <div class="patients-list">
+            <h2>Assigned Patients</h2>
+            {% if patients %}
+                <ul>
+                    {% for patient in patients %}
+                        <li>
+                            <strong>{{ patient.user_name }}</strong> - {{ patient.identification_no }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No patients assigned yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

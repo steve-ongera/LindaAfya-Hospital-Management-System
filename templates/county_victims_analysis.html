@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>County TB Victims Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>TB Victims by County</h1>
+
+    <!-- Bar chart canvas -->
+    <canvas id="countyVictimsChart" width="600" height="400"></canvas>
+
+    <script>
+        // Get the data passed from the view
+        const counties = {{ counties|safe }};  // Array of county names
+        const victimCounts = {{ victim_counts|safe }};  // Array of counts for each county
+
+        // Create the bar chart
+        const ctx = document.getElementById('countyVictimsChart').getContext('2d');
+        const countyVictimsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: counties,
+                datasets: [{
+                    label: 'Number of TB Victims',
+                    data: victimCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',  // Teal color for bars
+                    borderColor: 'rgba(75, 192, 192, 1)',  // Teal border
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Victims'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'County'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

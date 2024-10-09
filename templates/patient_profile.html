@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Profile</title>
+    <style>
+        /* Add some styling for a simple layout */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .patient-details {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .info-label {
+            font-weight: bold;
+        }
+
+        /* Add styles for the chart */
+        .chart-container {
+            position: relative;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="patient-details">
+        <h2>Welcome, {{ patient.first_name }} {{ patient.last_name }}</h2>
+        
+        <p><span class="info-label">Identification Number:</span> {{ patient.identification_no }}</p>
+        <p><span class="info-label">Identification Type:</span> {{ patient.identification_type }}</p>
+        <p><span class="info-label">Date of Birth:</span> {{ patient.dob }}</p>
+        <p><span class="info-label">Diagnosis Date:</span> {{ patient.diagnosis_date }}</p>
+        <p><span class="info-label">County:</span> {{ patient.county }}</p>
+
+        <h3>TB Details</h3>
+        <p><span class="info-label">TB Stage:</span> {{ patient.tb_stage }}</p>
+        <p><span class="info-label">Vaccine Received:</span> {{ patient.vaccine_received }}</p>
+        <p><span class="info-label">Vaccine Effectiveness:</span> {{ patient.vaccine_effectiveness }}%</p>
+
+        <h3>Recovery Progress</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Week</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Recovery Progress (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 1</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_1 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 2</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_2 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 3</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_3 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 4</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_4 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 5</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_5 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 6</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_6 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 7</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_7 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 8</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_8 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 9</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_9 }}%</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Week 10</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ patient.week_10 }}%</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <h3>Treatment Information</h3>
+        <p><span class="info-label">Treatment Start Date:</span> {{ patient.treatment_start_date }}</p>
+        <p><span class="info-label">Treatment End Date:</span> {{ patient.treatment_end_date }}</p>
+        <p><span class="info-label">Treatment Notes:</span> {{ patient.treatment_notes }}</p>
+
+        <h3>Performance and Follow-up</h3>
+        <p><span class="info-label">Performance Status:</span> {{ patient.performance_status }}</p>
+        <p><span class="info-label">Follow-up Date:</span> {{ patient.follow_up_date }}</p>
+
+        <!-- Chart container -->
+        <div class="chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Get performance data from Django template context
+        const performanceData = [
+            {{ patient.week_1 }},
+            {{ patient.week_2 }},
+            {{ patient.week_3 }},
+            {{ patient.week_4 }},
+            {{ patient.week_5 }},
+            {{ patient.week_6 }},
+            {{ patient.week_7 }},
+            {{ patient.week_8 }},
+            {{ patient.week_9 }},
+            {{ patient.week_10 }}
+        ];
+
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
+            type: 'line', // Use a line chart
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10'],
+                datasets: [{
+                    label: 'Recovery Progress (%)',
+                    data: performanceData,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete TB Patient</title>
+</head>
+<body>
+    <h2>Are you sure you want to delete {{ tb_patient.first_name }} {{ tb_patient.last_name }}?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+    <a href="{% url 'tb_patient_detail' tb_patient.pk %}">No, go back</a>
+</body>
+</html>

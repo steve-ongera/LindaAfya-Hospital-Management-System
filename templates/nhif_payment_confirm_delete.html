@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete NHIF Payment</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this payment?</h1>
+    
+    <p>Patient: {{ nhif_payment.patient.user_name }}</p>
+    <p>NHIF Number: {{ nhif_payment.nhif_number }}</p>
+    <p>Payment Date: {{ nhif_payment.payment_date }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+    <a href="{% url 'nhif_payment_list_all' %}">Cancel</a>
+</body>
+</html>

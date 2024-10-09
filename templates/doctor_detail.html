@@ -1,0 +1,29 @@
+{% load static %}
+<!-- doctor_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Details</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Doctor Details</h1>
+        <h2>{{ doctor.user_name }}</h2>
+        <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+        <p><strong>Schedule:</strong> {{ doctor.schedule }}</p>
+        <h3>Assigned Patients:</h3>
+        <ul>
+            {% for patient in doctor.patients.all %}
+                <li>{{ patient.user_name }} - {{ patient.identification_no }}</li>
+            {% empty %}
+                <li>No patients assigned.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'doctor_list' %}">Back to Doctor List</a> <!-- Link back to the doctor list or homepage -->
+    </div>
+</body>
+</html>

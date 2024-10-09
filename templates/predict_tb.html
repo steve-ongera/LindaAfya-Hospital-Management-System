@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TB Prediction Results</title>
+</head>
+<body>
+    <h1>TB Prediction Results for {{ patient.first_name }} {{ patient.last_name }}</h1>
+    <p>Predicted affected county: {{ predicted_county }}</p>
+    <p>Predicted spread rate: {{ predicted_spread|floatformat:2 }}</p>
+</body>
+</html>

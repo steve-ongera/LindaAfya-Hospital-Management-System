@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ patient.user_name }}'s Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ patient.user_name }}</h1>
+        
+        <h2>Your Profile Details</h2>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Full Name</th>
+                <td>{{ patient.user_name }}</td>
+            </tr>
+            <tr>
+                <th>Date of Birth</th>
+                <td>{{ patient.dob }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ patient.gender }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ patient.phone }}</td>
+            </tr>
+            <tr>
+                <th>Identification Number</th>
+                <td>{{ patient.identification_no }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ patient.address }}</td>
+            </tr>
+            <tr>
+                <th>Contact Info</th>
+                <td>{{ patient.contact_info }}</td>
+            </tr>
+            <tr>
+                <th>Medical History</th>
+                <td>{{ patient.medical_history }}</td>
+            </tr>
+            <tr>
+                <th>Bed Allocation</th>
+                <td>{{ patient.bed_allocation }}</td>
+            </tr>
+        </table>
+
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+    <h2>NHIF Payments Overview</h2>
+    
+    <ul>
+        {% for payment in nhif_payments %}
+            <li>{{ payment.payment_date }} - {{ payment.amount_paid }} KES ({{ payment.payment_method }})</li>
+        {% endfor %}
+    </ul>
+
+    <h3>NHIF Payments from January to December</h3>
+    <canvas id="nhifPaymentsChart"></canvas>
+
+    <script>
+        // Get payment data from the Django context
+        const paymentsByMonth = {{ payments_by_month|safe }};
+        const months = {{ months|safe }};
+        
+        // Render Chart.js graph
+        var ctx = document.getElementById('nhifPaymentsChart').getContext('2d');
+        var nhifPaymentsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,  // January to December
+                datasets: [{
+                    label: 'NHIF Payments (KES)',
+                    data: paymentsByMonth,  // Payments data from backend
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB Patients List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .view {
+            background-color: #007bff; /* Bootstrap primary color */
+        }
+        .update {
+            background-color: #28a745; /* Bootstrap success color */
+        }
+        .delete {
+            background-color: #dc3545; /* Bootstrap danger color */
+        }
+    </style>
+</head>
+<body>
+    <h2>List of TB Patients</h2>
+
+    {% if tb_patients %}
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Stage of TB</th>
+                    <th>Vaccine Received</th>
+                    <th>Diagnosis Date</th>
+                    <th>Actions</th>  <!-- New Actions Column -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in tb_patients %}
+                    <tr>
+                        <td>{{ patient.user_name }}</td>
+                        <td>{{ patient.first_name }}</td>
+                        <td>{{ patient.last_name }}</td>
+                        <td>{{ patient.tb_stage }}</td>
+                        <td>{{ patient.vaccine_received }}</td>
+                        <td>{{ patient.diagnosis_date }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'tb_patient_detail' patient.id %}" class="view">View</a>
+                                <a href="{% url 'tb_patient_update' patient.id %}" class="update">Update</a>
+                                <a href="{% url 'tb_patient_delete' patient.id %}" class="delete" onclick="return confirm('Are you sure you want to delete this patient?');">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No TB patients found.</p>
+    {% endif %}
+</body>
+</html>

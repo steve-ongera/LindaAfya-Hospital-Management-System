@@ -1,0 +1,27 @@
+<!-- patient_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Details</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Details</h1>
+        <img src="{{ patient.profile_image.url }}" alt="{{ patient.user_name }}'s Profile Image" style="width:150px; height:150px; border-radius: 50%;"> <!-- Display the profile image -->
+        <p><strong>Name:</strong> {{ patient.user_name }}</p>
+        <p><strong>Date of Birth:</strong> {{ patient.dob }}</p>
+        <p><strong>Gender:</strong> {{ patient.gender }}</p>
+        <p><strong>Phone:</strong> {{ patient.phone }}</p>
+        <p><strong>Identification No:</strong> {{ patient.identification_no }}</p>
+        <p><strong>Address:</strong> {{ patient.address }}</p>
+        <p><strong>Contact Info:</strong> {{ patient.contact_info }}</p>
+        <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+        <p><strong>Bed Allocation:</strong> {{ patient.bed_allocation }}</p>
+        <a href="{% url 'patient_list' %}">Back to Patient List</a> <!-- Link back to the patient list or homepage -->
+    </div>
+</body>
+</html>
+

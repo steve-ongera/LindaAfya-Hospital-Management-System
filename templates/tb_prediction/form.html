@@ -1,0 +1,10 @@
+<!-- tb_prediction/templates/tb_prediction/form.html -->
+<form method="post">
+    {% csrf_token %}
+    <input type="number" name="age" placeholder="Age" required>
+    <input type="text" name="county" placeholder="County" required>
+    <input type="text" name="tb_stage" placeholder="TB Stage" required>
+    <input type="text" name="vaccine_received" placeholder="Vaccine Received" required>
+    <input type="number" name="vaccine_effectiveness" placeholder="Vaccine Effectiveness" required>
+    <button type="submit">Predict</button>
+</form>

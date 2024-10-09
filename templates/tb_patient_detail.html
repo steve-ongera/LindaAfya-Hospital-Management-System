@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TB Patient Detail</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2, h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #007bff;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-top: 30px;
+            width: 100%;
+            height: 400px;
+        }
+
+        canvas {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Details for {{ tb_patient.first_name }} {{ tb_patient.last_name }}</h2>
+
+        <p><strong>User Name:</strong> {{ tb_patient.user_name }}</p>
+        <p><strong>First Name:</strong> {{ tb_patient.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ tb_patient.last_name }}</p>
+        <p><strong>Stage of TB:</strong> {{ tb_patient.tb_stage }}</p>
+        <p><strong>Vaccine Received:</strong> {{ tb_patient.vaccine_received }}</p>
+        <p><strong>Diagnosis Date:</strong> {{ tb_patient.diagnosis_date }}</p>
+        
+        <h3>Weekly Progress</h3>
+        <ul>
+            <li><strong>Week 1:</strong> {{ tb_patient.week_1 }}%</li>
+            <li><strong>Week 2:</strong> {{ tb_patient.week_2 }}%</li>
+            <li><strong>Week 3:</strong> {{ tb_patient.week_3 }}%</li>
+            <li><strong>Week 4:</strong> {{ tb_patient.week_4 }}%</li>
+            <li><strong>Week 5:</strong> {{ tb_patient.week_5 }}%</li>
+            <li><strong>Week 6:</strong> {{ tb_patient.week_6 }}%</li>
+            <li><strong>Week 7:</strong> {{ tb_patient.week_7 }}%</li>
+            <li><strong>Week 8:</strong> {{ tb_patient.week_8 }}%</li>
+            <li><strong>Week 9:</strong> {{ tb_patient.week_9 }}%</li>
+            <li><strong>Week 10:</strong> {{ tb_patient.week_10 }}%</li>
+        </ul>
+        
+        <p><strong>Treatment Notes:</strong> {{ tb_patient.treatment_notes }}</p>
+
+        <div class="button-container">
+            <a href="{% url 'tb_patient_update' tb_patient.pk %}" class="btn-update"><i class="fas fa-edit"></i> Update</a> |
+            <a href="{% url 'tb_patient_delete' tb_patient.pk %}" class="btn-delete"><i class="fas fa-trash-alt"></i> Delete</a>
+        </div>
+
+        <h3>Performance Over Weeks</h3>
+        <div class="chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <script>
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            const weeks = {{ weeks|safe }};  // List of week labels
+            const performanceData = {{ performance_data|safe }};  // Performance data as floats
+        
+            const performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: weeks,
+                    datasets: [{
+                        label: 'Patient Recovery Performance (%)',
+                        data: performanceData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4 // This property makes the line smooth
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Recovery Percentage'
+                            }
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

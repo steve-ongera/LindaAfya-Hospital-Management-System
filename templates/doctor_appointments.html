@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Appointments</title>
+</head>
+<body>
+    <h2>My Appointments</h2>
+
+    {% if appointments %}
+        <ul>
+            {% for appointment in appointments %}
+                <li>
+                    <strong>Patient:</strong> {{ appointment.patient.user_name }}<br>
+                    <strong>Appointment Date:</strong> {{ appointment.appointment_date }}<br>
+                    <strong>Symptoms:</strong> {{ appointment.symptoms }}<br>
+                    <strong>Booked on:</strong> {{ appointment.created_at }}<br>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no upcoming appointments.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update TB Patient</title>
+</head>
+<body>
+    <h2>Update Information for {{ tb_patient.first_name }} {{ tb_patient.last_name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+    <a href="{% url 'tb_patient_detail' tb_patient.pk %}">Cancel</a>
+</body>
+</html>

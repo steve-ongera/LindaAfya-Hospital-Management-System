@@ -1,0 +1,234 @@
+<!-- vaccine_performance.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine Performance</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        canvas {
+            margin-top: 30px;
+        }
+
+        body {
+                font-family: Arial, sans-serif;
+                background-color: #f9f9f9;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            h1 {
+                color: #333;
+                text-align: center;
+            }
+    
+            h3 {
+                color: #666;
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+    
+            canvas {
+                max-width: 600px;
+                margin: 0 auto;
+                display: block;
+            }
+    
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Vaccine Performance Overview</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Vaccine Received</th>
+                    <th>Average Progress (%)</th>
+                    <th>Vaccine Effectiveness (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in vaccine_data %}
+                    <tr>
+                        <td>{{ data.user_name }}</td>
+                        <td>{{ data.vaccine_received }}</td>
+                        <td>{{ data.average_progress|floatformat:2 }}</td>
+                        <td>{{ data.vaccine_effectiveness|floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <!-- Chart for Average Weekly Progress -->
+        <div class="container">
+            <h1>Vaccine Performance Overview</h1>
+    
+            <h3>Patients by Vaccine</h3>
+            <!-- Chart for Average Weekly Progress -->
+            <h2>Weekly Progress of Each Patient</h2>
+            <canvas id="weeklyProgressChart" width="600" height="400"></canvas>
+        
+        <!-- Chart for Vaccine Distribution -->
+        <h2>Vaccine Distribution</h2>
+           
+            <canvas id="barChart"  width="400" height="200"></canvas>
+            <br>
+            <br>
+            <canvas id="pieChart"   width="400" height="200"></canvas>
+        </div>
+    
+        <script>
+             // Weekly Progress Chart
+            const weeklyProgressCtx = document.getElementById('weeklyProgressChart').getContext('2d');
+            
+            const labels = [{% for data in vaccine_data %} '{{ data.user_name }}',{% endfor %} ];
+            const dataValues = [{% for data in vaccine_data %} {{ data.average_progress|floatformat:2 }},{% endfor %}];
+            const colors = [{% for data in vaccine_data %} '{{ data.vaccine_received|lower }}', {% endfor %}];  // Get vaccine type for each patient
+            
+            const vaccineColors = {
+                'bcg': 'rgba(75, 192, 192, 0.6)',  // teal
+                'vaccine x': 'rgba(255, 99, 132, 0.6)',  // red
+                'vaccine y': 'rgba(255, 206, 86, 0.6)',  // yellow
+                'vaccine z': 'green',
+            };
+
+            const backgroundColors = colors.map(color => vaccineColors[color] || 'rgba(201, 203, 207, 0.2)');  // Default color if not found
+
+            const weeklyProgressChart = new Chart(weeklyProgressCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Average Weekly Progress (%)',
+                        data: dataValues,
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.6', '1')),  // Make border color a bit darker
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Progress (%)'
+                            }
+                        }
+                    }
+                }
+            });
+             
+            // Bar Chart
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            const barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: {{ bar_labels|safe }},
+                    datasets: [{
+                        label: 'Number of Patients',
+                        data: {{ bar_data|safe }},
+                        backgroundColor: {{ bar_colors|safe }},
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Patients'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return `${tooltipItem.dataset.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            
+            // Pie Chart
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            const pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: {{ pie_labels|safe }},
+                    datasets: [{
+                        label: 'Patients by Vaccine',
+                        data: {{ pie_data|safe }},
+                        backgroundColor: {{ pie_colors|safe }},
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return `${tooltipItem.label}: ${tooltipItem.raw}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+    </html>

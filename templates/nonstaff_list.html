@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Non-Staff List</title>
+</head>
+<body>
+    <h1>Non-Staff List</h1>
+    <a href="{% url 'nonstaff_create' %}">Add New Non-Staff</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Contact Info</th>
+            <th>Role</th>
+            <th>Company</th>
+            <th>Reason for Visit</th>
+            <th>Entry Time</th>
+            <th>Actions</th>
+        </tr>
+        {% for nonstaff in nonstaffs %}
+        <tr>
+            <td>{{ nonstaff.name }}</td>
+            <td>{{ nonstaff.contact_info }}</td>
+            <td>{{ nonstaff.role }}</td>
+            <td>{{ nonstaff.company }}</td>
+            <td>{{ nonstaff.reason_for_visit }}</td>
+            <td>{{ nonstaff.entry_time }}</td>
+            <td>
+                <a href="{% url 'nonstaff_update' nonstaff.pk %}">Edit</a>
+                <a href="{% url 'nonstaff_delete' nonstaff.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

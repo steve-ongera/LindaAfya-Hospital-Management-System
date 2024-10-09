@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Appointments</title>
+</head>
+<body>
+    <h2>My Appointments</h2>
+
+    {% if appointments %}
+        <ul>
+            {% for appointment in appointments %}
+                <li>
+                    <strong>Doctor:</strong> Dr. {{ appointment.doctor.user_name }}<br>
+                    <strong>Specialization:</strong> {{ appointment.doctor.specialization }}<br>
+                    <strong>Appointment Date:</strong> {{ appointment.appointment_date }}<br>
+                    <strong>Symptoms:</strong> {{ appointment.symptoms }}<br>
+                    <strong>Booked on:</strong> {{ appointment.created_at }}<br>
+                    
+                    <!-- Update and Delete Links -->
+                    <a href="{% url 'update_appointment' appointment.id %}">Update Appointment</a> |
+                    <a href="{% url 'delete_appointment' appointment.id %}" onclick="return confirm('Are you sure you want to delete this appointment?');">Delete Appointment</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no upcoming appointments.</p>
+    {% endif %}
+</body>
+</html>
+

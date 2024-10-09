@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Staff Member</title>
+</head>
+<body>
+    <h1>Delete Staff Member</h1>
+    <p>Are you sure you want to delete {{ staff_member.user.first_name }} {{ staff_member.user.last_name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+    <a href="{% url 'staff_list' %}">Cancel</a>
+</body>
+</html>

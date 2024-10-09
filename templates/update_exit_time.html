@@ -1,0 +1,6 @@
+<h1>Update Exit Time for {{ nonstaff.name }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <input type="datetime-local" name="exit_time">
+    <button type="submit">Update Exit Time</button>
+</form>

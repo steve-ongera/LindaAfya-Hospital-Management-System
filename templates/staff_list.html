@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff List</title>
+</head>
+<body>
+    <h1>Staff List</h1>
+    <a href="{% url 'staff_create' %}">Add New Staff Member</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Contact Info</th>
+            <th>Actions</th>
+        </tr>
+        {% for staff in staff_members %}
+        <tr>
+            <td>{{ staff.user.first_name }} {{ staff.user.last_name }}</td>
+            <td>{{ staff.role }}</td>
+            <td>{{ staff.contact_info }}</td>
+            <td>
+                <a href="{% url 'staff_update' staff.pk %}">Edit</a>
+                <a href="{% url 'staff_delete' staff.pk %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

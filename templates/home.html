@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #007bff;
+        }
+
+        /* Dropdown Menu */
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            min-width: 150px;
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            width: 100%;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the Hospital Management System</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li>
+                <a href="#">Doctors</a>
+                <ul>
+                    <li><a href="{% url 'doctor_list' %}">All Doctors</a></li>
+                    <li><a href="{% url 'doctor_create' %}">Add New Doctor</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Patients</a>
+                <ul>
+                    <li><a href="{% url 'patient_list' %}">All Patients</a></li>
+                    <li><a href="{% url 'patient_create' %}">Add New Patient</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Staff</a>
+                <ul>
+                    <li><a href="{% url 'staff_list' %}">All Staff</a></li>
+                    <li><a href="{% url 'staff_create' %}">Add New Staff</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Non-Staff</a>
+                <ul>
+                    <li><a href="{% url 'nonstaff_list' %}">All Non-Staff</a></li>
+                    <li><a href="{% url 'nonstaff_create' %}">Add New Non-Staff</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Manage Beds</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        <h2>About Our Hospital</h2>
+        <p>Our hospital provides top-tier medical care with advanced management systems for staff, patients, and visitors.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li>Manage Doctor, Patient, and Staff records</li>
+            <li>Allocate and track hospital beds</li>
+            <li>Comprehensive reporting system</li>
+            <li>Visitor and Vendor tracking</li>
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; {{ current_year }} Your Hospital Name. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>
