@@ -1,0 +1,11 @@
+<!-- hospital_detail.html -->
+
+<h1>Hospital Details</h1>
+<p>Name: {{ hospital.name }}</p>
+<p>Address: {{ hospital.address }}</p>
+<p>Region: {{ hospital.region.name }}</p>
+<p>Phone Number: {{ hospital.phone_number }}</p>
+<p>Email: {{ hospital.email }}</p>
+<a href="{% url 'hospital_update' hospital.pk %}">Edit</a>
+<a href="{% url 'hospital_delete' hospital.pk %}">Delete</a>
+<a href="{% url 'hospital_list' %}">Back to Hospitals</a>

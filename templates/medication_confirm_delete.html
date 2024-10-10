@@ -1,0 +1,9 @@
+<!-- medication_confirm_delete.html -->
+
+<h1>Delete Medication</h1>
+<p>Are you sure you want to delete "{{ medication.name }}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+</form>
+<a href="{% url 'medication_list' %}">Cancel</a>

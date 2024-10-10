@@ -1,0 +1,7 @@
+<!-- region_detail.html -->
+
+<h1>Region Details</h1>
+<p>Name: {{ region.name }}</p>
+<a href="{% url 'region_update' region.pk %}">Edit</a>
+<a href="{% url 'region_delete' region.pk %}">Delete</a>
+<a href="{% url 'region_list' %}">Back to Regions</a>

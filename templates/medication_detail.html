@@ -1,0 +1,10 @@
+<!-- medication_detail.html -->
+
+<h1>Medication Details</h1>
+<p>Name: {{ medication.name }}</p>
+<p>Dosage: {{ medication.dosage }}</p>
+<p>Side Effects: {{ medication.side_effects }}</p>
+<p>Availability: {{ medication.availability }}</p>
+<a href="{% url 'medication_update' medication.pk %}">Edit</a>
+<a href="{% url 'medication_delete' medication.pk %}">Delete</a>
+<a href="{% url 'medication_list' %}">Back to Medications</a>

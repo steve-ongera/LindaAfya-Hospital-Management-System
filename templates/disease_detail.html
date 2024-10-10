@@ -1,0 +1,29 @@
+<!-- disease_detail.html -->
+
+<h1>Disease Details</h1>
+<p>Name: {{ disease.name }}</p>
+<p>Description: {{ disease.description }}</p>
+<p>Preventive Measures: {{ disease.preventive_measures }}</p>
+<p>Treatment Info: {{ disease.treatment_info }}</p>
+{% if disease.image %}
+    <img src="{{ disease.image.url }}" alt="{{ disease.name }} Image">
+{% endif %}
+{% if disease.image2 %}
+    <img src="{{ disease.image2.url }}" alt="{{ disease.name }} Image 2">
+{% endif %}
+{% if disease.image3 %}
+    <img src="{{ disease.image3.url }}" alt="{{ disease.name }} Image 3">
+{% endif %}
+<p>Affected Regions: 
+    {% for region in disease.affected_regions.all %}
+        {{ region.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+<p>Related Medications: 
+    {% for medication in disease.medications.all %}
+        {{ medication.name }}{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+</p>
+<a href="{% url 'disease_update' disease.pk %}">Edit</a>
+<a href="{% url 'disease_delete' disease.pk %}">Delete</a>
+<a href="{% url 'disease_list' %}">Back to Diseases</a>

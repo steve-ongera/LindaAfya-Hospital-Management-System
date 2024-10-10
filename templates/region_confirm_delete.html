@@ -1,0 +1,9 @@
+<!-- region_confirm_delete.html -->
+
+<h1>Delete Region</h1>
+<p>Are you sure you want to delete "{{ region.name }}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+</form>
+<a href="{% url 'region_list' %}">Cancel</a>

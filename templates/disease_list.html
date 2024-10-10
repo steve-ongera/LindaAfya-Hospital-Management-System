@@ -1,0 +1,13 @@
+<!-- disease_list.html -->
+
+<h1>Diseases</h1>
+<a href="{% url 'disease_create' %}">Add New Disease</a>
+<ul>
+    {% for disease in diseases %}
+        <li>
+            <a href="{% url 'disease_detail' disease.pk %}">{{ disease.name }}</a>
+            (<a href="{% url 'disease_update' disease.pk %}">Edit</a>)
+            (<a href="{% url 'disease_delete' disease.pk %}">Delete</a>)
+        </li>
+    {% endfor %}
+</ul>

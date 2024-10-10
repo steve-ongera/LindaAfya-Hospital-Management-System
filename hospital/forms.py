@@ -132,3 +132,31 @@ class TBPatientForm(forms.ModelForm):
     class Meta:
         model = TBPatient
         fields = '__all__'
+
+
+class RegionForm(forms.ModelForm):
+    class Meta:
+        model = Region
+        fields = ['name']
+
+
+class HospitalForm(forms.ModelForm):
+    class Meta:
+        model = Hospital
+        fields = ['name', 'address', 'region', 'phone_number', 'email']
+
+class MedicationForm(forms.ModelForm):
+    class Meta:
+        model = Medication
+        fields = ['name', 'dosage', 'side_effects', 'availability']
+
+
+
+class DiseaseForm(forms.ModelForm):
+    class Meta:
+        model = Disease
+        fields = ['name', 'description', 'preventive_measures', 'treatment_info', 'image', 'image2', 'image3', 'affected_regions', 'medications']
+        widgets = {
+            'affected_regions': forms.CheckboxSelectMultiple(),
+            'medications': forms.CheckboxSelectMultiple(),
+        }

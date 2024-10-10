@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-
+#from django.contrib.gis.db import models as gis_models  # For geolocation data
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -222,3 +222,47 @@ class TBPatient(models.Model):
     class Meta:
         verbose_name = 'TB Patient'
         verbose_name_plural = 'TB Patients'
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=255)  # Region name
+    
+    
+    def __str__(self):
+        return self.name
+
+
+
+class Hospital(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name='hospitals')  # Link to Region
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField()
+    
+    def __str__(self):
+        return self.name
+
+class Medication(models.Model):
+    name = models.CharField(max_length=255)  # Medication name
+    dosage = models.CharField(max_length=100)  # Dosage information
+    side_effects = models.TextField()  # Side effects of the medication
+    availability = models.CharField(max_length=255)  # Where to find the medication (e.g., pharmacy)
+    
+    def __str__(self):
+        return self.name
+
+class Disease(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    preventive_measures = models.TextField()
+    treatment_info = models.TextField()
+    image = models.ImageField(upload_to='disease_images/', null=True, blank=True)
+    image2 = models.ImageField(upload_to='disease_images/', null=True, blank=True)
+    image3 = models.ImageField(upload_to='disease_images/', null=True, blank=True)
+    affected_regions = models.ManyToManyField(Region, related_name='diseases')  # Areas affected
+    medications = models.ManyToManyField(Medication, related_name='diseases')  # Related medications
+    
+    
+    def __str__(self):
+        return self.name

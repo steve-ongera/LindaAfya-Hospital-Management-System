@@ -1,0 +1,13 @@
+<!-- region_list.html -->
+
+<h1>Regions</h1>
+<a href="{% url 'region_create' %}">Add New Region</a>
+<ul>
+    {% for region in regions %}
+        <li>
+            <a href="{% url 'region_detail' region.pk %}">{{ region.name }}</a>
+            (<a href="{% url 'region_update' region.pk %}">Edit</a>)
+            (<a href="{% url 'region_delete' region.pk %}">Delete</a>)
+        </li>
+    {% endfor %}
+</ul>

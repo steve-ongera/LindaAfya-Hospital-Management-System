@@ -1,17 +1,60 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>County TB Victims Analysis</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h1>TB Victims by County</h1>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link to your CSS file -->
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Bar chart canvas -->
-    <canvas id="countyVictimsChart" width="600" height="400"></canvas>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4; /* Light grey background */
+            color: #333; /* Dark grey text */
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        .container {
+            max-width: 800px; /* Center the content */
+            margin: 0 auto;
+            background: white; /* White background for content area */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 20px;
+        }
+
+        canvas {
+            max-width: 100%; /* Responsive canvas */
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Center the canvas */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>TB Victims by County</h1>
+
+        <!-- Bar chart canvas -->
+        <canvas id="countyVictimsChart" width="600" height="400"></canvas>
+    </div>
 
     <script>
         // Get the data passed from the view
@@ -57,4 +100,5 @@
         });
     </script>
 </body>
+
 </html>

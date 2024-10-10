@@ -1,0 +1,9 @@
+<!-- medication_form.html -->
+
+<h1>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Medication</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'medication_list' %}">Cancel</a>

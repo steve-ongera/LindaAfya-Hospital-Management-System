@@ -875,3 +875,172 @@ def predict_tb(request, patient_id):
     }
     
     return render(request, 'predict_tb.html', context)
+
+
+# View for listing all regions
+def region_list(request):
+    regions = Region.objects.all()
+    return render(request, 'region_list.html', {'regions': regions})
+
+# View for adding a new region
+def region_create(request):
+    if request.method == "POST":
+        form = RegionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('region_list')
+    else:
+        form = RegionForm()
+    return render(request, 'region_form.html', {'form': form})
+
+# View for updating an existing region
+def region_update(request, pk):
+    region = get_object_or_404(Region, pk=pk)
+    if request.method == "POST":
+        form = RegionForm(request.POST, instance=region)
+        if form.is_valid():
+            form.save()
+            return redirect('region_list')
+    else:
+        form = RegionForm(instance=region)
+    return render(request, 'region_form.html', {'form': form})
+
+# View for deleting a region
+def region_delete(request, pk):
+    region = get_object_or_404(Region, pk=pk)
+    if request.method == "POST":
+        region.delete()
+        return redirect('region_list')
+    return render(request, 'region_confirm_delete.html', {'region': region})
+
+# View for detailing a specific region
+def region_detail(request, pk):
+    region = get_object_or_404(Region, pk=pk)
+    return render(request, 'region_detail.html', {'region': region})
+
+
+# View for listing all hospitals
+def hospital_list(request):
+    hospitals = Hospital.objects.all()
+    return render(request, 'hospital_list.html', {'hospitals': hospitals})
+
+# View for adding a new hospital
+def hospital_create(request):
+    if request.method == "POST":
+        form = HospitalForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital_list')
+    else:
+        form = HospitalForm()
+    return render(request, 'hospital_form.html', {'form': form})
+
+# View for updating an existing hospital
+def hospital_update(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+    if request.method == "POST":
+        form = HospitalForm(request.POST, instance=hospital)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital_list')
+    else:
+        form = HospitalForm(instance=hospital)
+    return render(request, 'hospital_form.html', {'form': form})
+
+# View for deleting a hospital
+def hospital_delete(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+    if request.method == "POST":
+        hospital.delete()
+        return redirect('hospital_list')
+    return render(request, 'hospital_confirm_delete.html', {'hospital': hospital})
+
+# View for detailing a specific hospital
+def hospital_detail(request, pk):
+    hospital = get_object_or_404(Hospital, pk=pk)
+    return render(request, 'hospital_detail.html', {'hospital': hospital})
+
+
+# View for listing all medications
+def medication_list(request):
+    medications = Medication.objects.all()
+    return render(request, 'medication_list.html', {'medications': medications})
+
+# View for adding a new medication
+def medication_create(request):
+    if request.method == "POST":
+        form = MedicationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('medication_list')
+    else:
+        form = MedicationForm()
+    return render(request, 'medication_form.html', {'form': form})
+
+# View for updating an existing medication
+def medication_update(request, pk):
+    medication = get_object_or_404(Medication, pk=pk)
+    if request.method == "POST":
+        form = MedicationForm(request.POST, instance=medication)
+        if form.is_valid():
+            form.save()
+            return redirect('medication_list')
+    else:
+        form = MedicationForm(instance=medication)
+    return render(request, 'medication_form.html', {'form': form})
+
+# View for deleting a medication
+def medication_delete(request, pk):
+    medication = get_object_or_404(Medication, pk=pk)
+    if request.method == "POST":
+        medication.delete()
+        return redirect('medication_list')
+    return render(request, 'medication_confirm_delete.html', {'medication': medication})
+
+# View for detailing a specific medication
+def medication_detail(request, pk):
+    medication = get_object_or_404(Medication, pk=pk)
+    return render(request, 'medication_detail.html', {'medication': medication})
+
+
+
+# View for listing all diseases
+def disease_list(request):
+    diseases = Disease.objects.all()
+    return render(request, 'disease_list.html', {'diseases': diseases})
+
+# View for adding a new disease
+def disease_create(request):
+    if request.method == "POST":
+        form = DiseaseForm(request.POST, request.FILES)  # Include FILES for image upload
+        if form.is_valid():
+            form.save()
+            return redirect('disease_list')
+    else:
+        form = DiseaseForm()
+    return render(request, 'disease_form.html', {'form': form})
+
+# View for updating an existing disease
+def disease_update(request, pk):
+    disease = get_object_or_404(Disease, pk=pk)
+    if request.method == "POST":
+        form = DiseaseForm(request.POST, request.FILES, instance=disease)  # Include FILES for image upload
+        if form.is_valid():
+            form.save()
+            return redirect('disease_list')
+    else:
+        form = DiseaseForm(instance=disease)
+    return render(request, 'disease_form.html', {'form': form})
+
+# View for deleting a disease
+def disease_delete(request, pk):
+    disease = get_object_or_404(Disease, pk=pk)
+    if request.method == "POST":
+        disease.delete()
+        return redirect('disease_list')
+    return render(request, 'disease_confirm_delete.html', {'disease': disease})
+
+# View for detailing a specific disease
+def disease_detail(request, pk):
+    disease = get_object_or_404(Disease, pk=pk)
+    return render(request, 'disease_detail.html', {'disease': disease})

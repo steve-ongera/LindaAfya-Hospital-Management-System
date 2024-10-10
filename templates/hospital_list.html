@@ -1,0 +1,13 @@
+<!-- hospital_list.html -->
+
+<h1>Hospitals</h1>
+<a href="{% url 'hospital_create' %}">Add New Hospital</a>
+<ul>
+    {% for hospital in hospitals %}
+        <li>
+            <a href="{% url 'hospital_detail' hospital.pk %}">{{ hospital.name }}</a>
+            (<a href="{% url 'hospital_update' hospital.pk %}">Edit</a>)
+            (<a href="{% url 'hospital_delete' hospital.pk %}">Delete</a>)
+        </li>
+    {% endfor %}
+</ul>
